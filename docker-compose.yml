@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  notebook:
+    image: jupyter/scipy-notebook
+    ports:
+      - 8888:8888
+    volumes:
+      - ./input:/home/jovyan/work/input
+      - ./notebook:/home/jovyan/work/notebook
+#  api:
+#    build: .
+#    ports:
+#      - "5000:5000"
+#    volumes:
+#      - .:/code
+#      - logvolume01:/var/log
+#    links:
+#      - redis
+#  react:
+#    image: react
+  redis:
+    image: redislabs/rejson
+    ports:
+      - 6379:6379
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+  postgres:
+    image: postgres:alpine
+#volumes:
+#  logvolume01: { }
