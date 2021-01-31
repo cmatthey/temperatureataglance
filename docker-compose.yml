@@ -7,31 +7,41 @@ services:
     volumes:
       - ./input:/home/jovyan/work/input
       - ./notebook:/home/jovyan/work/notebook
-#  api:
-#    build: .
-#    ports:
-#      - "5000:5000"
-#    volumes:
-#      - .:/code
-#      - logvolume01:/var/log
-#    links:
-#      - redis
-#  react:
-#    image: react
+    container_name: notebook
+  api:
+    build:
+      context: api
+      target: dev
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+  #      - logvolume01:/var/log
+    environment:
+      NODE_ENV: development
+      DEBUG: nodejs-docker-express:*
+  #    links:
+  #      - redis
+  #  react:
+  #    image: react
+    container_name: api
   redis:
     image: redislabs/rejson
     ports:
       - 6379:6379
+    container_name: redis
   mongo:
     image: mongo
     ports:
       - 27017:27017
+    container_name: mongo
   mongo-express:
     image: mongo-express
     ports:
       - 8081:8081
     depends_on:
       - mongo
+    container_name: mongoadmin
   postgres:
     image: postgres:alpine
 #volumes:
