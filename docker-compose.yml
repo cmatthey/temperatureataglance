@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  notebook:
+  etl:
     image: jupyter/scipy-notebook
     ports:
       - 8888:8888
@@ -15,7 +15,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - .:/app
+      - ./api:/api
   #      - logvolume01:/var/log
     environment:
       NODE_ENV: development
