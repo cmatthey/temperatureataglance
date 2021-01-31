@@ -102,3 +102,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# IDE
+.idea/
+
+# Data
+input/
+
+# Notebook
+notebook/.ipynb_checkpoints/
