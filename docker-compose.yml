@@ -1,30 +1,27 @@
 version: "3.9"
 services:
+  api:
+    build:
+      context: api
+      target: dev
+    ports:
+      - 5000:3000
+    volumes:
+      - ./api:/api
+    environment:
+      NODE_ENV: development
+      DEBUG: api:*
+    depends_on:
+      - redis
+    container_name: api
   etl:
     image: jupyter/scipy-notebook
     ports:
       - 8888:8888
     volumes:
       - ./input:/home/jovyan/work/input
-      - ./notebook:/home/jovyan/work/notebook
-    container_name: notebook
-  api:
-    build:
-      context: api
-      target: dev
-    ports:
-      - 3000:3000
-    volumes:
-      - ./api:/api
-  #      - logvolume01:/var/log
-    environment:
-      NODE_ENV: development
-      DEBUG: nodejs-docker-express:*
-  #    links:
-  #      - redis
-  #  react:
-  #    image: react
-    container_name: api
+      - ./etl:/home/jovyan/work/etl
+    container_name: etl
   redis:
     image: redislabs/rejson
     ports:
@@ -44,5 +41,16 @@ services:
     container_name: mongoadmin
   postgres:
     image: postgres:alpine
-#volumes:
-#  logvolume01: { }
+  ui:
+    build:
+      context: ui
+      target: dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./ui:/ui
+      - /ui/node_modules
+    # depends_on:
+    #   - api
+    container_name: ui
+
