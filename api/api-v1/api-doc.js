@@ -1,8 +1,9 @@
 const apiDoc = {
     swagger: '2.0',
+    host: 'localhost',
     basePath: '/v1',
     info: {
-        title: 'Temperature at a glance',
+        title: 'Temperature at a Glance',
         version: '1.0.0'
     },
     definitions: {
@@ -10,8 +11,18 @@ const apiDoc = {
             type: 'object',
             properties: {
                 city: {
-                    description: 'The city to display temperature.',
-                    type: 'string'
+                    description: 'display temperature trend',
+                    type: 'object'
+                }
+            },
+            required: ['city']
+        },
+        City: {
+            type: 'object',
+            properties: {
+                city: {
+                    description: 'display temperatures by the major cities',
+                    type: 'object'
                 }
             },
             required: ['city']

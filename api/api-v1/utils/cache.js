@@ -6,6 +6,7 @@ const client = redis.createClient('redis://redis:6379');
 const getAsync = promisify(client.json_get).bind(client);
 const TEMPERATURES_KEY = 'temperature';
 
+// TODO: handle cache miss
 const cacheUtil = async function () {
     return await getAsync(TEMPERATURES_KEY, '.');
 };
